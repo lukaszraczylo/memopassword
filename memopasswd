@@ -10,7 +10,67 @@
 				- 3 capital letters
 				- 2 special characters
 				- 1 number
-*/
+ */
+function to_phonetic($character) {
+	 $nato = array (
+		  "a" => "alfa",
+		  "b" => "bravo", 
+		  "c" => "charlie",
+		  "d" => "delta", 
+		  "e" => "echo",
+        "f" => "foxtrot", 
+        "g" => "golf", 
+        "h" => "hotel", 
+        "i" => "india", 
+        "j" => "juliett", 
+        "k" => "kilo", 
+        "l" => "lima", 
+        "m" => "mike", 
+        "n" => "november", 
+        "o" => "oscar", 
+        "p" => "papa", 
+        "q" => "quebec", 
+        "r" => "romeo", 
+        "s" => "sierra", 
+        "t" => "tango", 
+        "u" => "uniform", 
+        "v" => "victor", 
+        "w" => "whisky", 
+        "x" => "x-ray", 
+        "y" => "yankee", 
+        "z" => "zulu", 
+        "0" => "zero", 
+        "1" => "one", 
+        "2" => "two", 
+        "3" => "three", 
+        "4" => "four", 
+        "5" => "five", 
+        "6" => "six", 
+        "7" => "seven", 
+        "8" => "eight", 
+		  "9" => "niner",
+		  "!" => "exclamation mark",
+		  "@" => "at",
+		  "$" => "dollar",
+		  "%" => "percent",
+		  "&" => "ampersand / and",
+		  "*" => "asterisk",
+		  "#" => "hash",
+		  "-" => "dash / minus",
+		  "+" => "plus",
+		  "=" => "equals",
+		  "/" => "forward slash", 
+		  "." => "dot",
+		  "?" => "question mark"
+	 );
+	 $to_ret = "";
+	 if (ctype_upper($character)) {
+		  $to_ret = "capital-"; 
+	 }
+	 $to_ret .= "". $nato[strtolower($character)] ."";
+	 return $to_ret;
+}
+
 define("word_length", 6);
 $special_characters = array("!", "@", "$", "%", "&", "*", "#", "-", "+", "=", "/", ".", "?");
 $dictionary = "/usr/share/dict/words";
@@ -23,5 +83,12 @@ foreach($random_letters as $random_cl) {
 	 $chosen_word_array[$random_cl]= strtoupper($chosen_word_array[$random_cl]);
 }
 $mixed_word = implode($chosen_word_array);
-echo $special_characters[array_rand($special_characters)]. "" .$special_characters[array_rand($special_characters)]. "" .$mixed_word. "" .rand(0,9). " (based on: " .$chosen_word. ") \n";
+$final_password = $special_characters[array_rand($special_characters)]. "" .$special_characters[array_rand($special_characters)]. "" .$mixed_word. "" .rand(0,9);
+echo "Generated password: \n\n". $final_password ." ( Based on: ". $chosen_word ." )\n";
+echo "\nPhonetic notation:\n";
+$make_it_phonetic = str_split($final_password);
+foreach($make_it_phonetic as $single_character) {
+	 echo $single_character ." - ". to_phonetic($single_character) ."\n";
+}
+echo "\n";
 ?>
