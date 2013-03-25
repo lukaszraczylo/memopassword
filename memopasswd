@@ -1,0 +1,27 @@
+#!/usr/bin/php
+<?php
+/*
+        Lukasz Raczylo, lukasz[a]raczylo.com
+		  License: Beerware;
+
+		  Memorable password generator;
+		  Default password length: 9 characters.
+		  Default complexity:
+				- 3 capital letters
+				- 2 special characters
+				- 1 number
+*/
+define("word_length", 6);
+$special_characters = array("!", "@", "$", "%", "&", "*", "#", "-", "+", "=", "/", ".", "?");
+$dictionary = "/usr/share/dict/words";
+$wordlist_array = explode("\n", file_get_contents($dictionary));
+$wordlist = preg_grep('/^[a-zA-z]{'.word_length.'}$/', $wordlist_array);
+$chosen_word = strtolower($wordlist[array_rand($wordlist)]);
+$chosen_word_array = str_split($chosen_word);
+$random_letters = array_rand($chosen_word_array, 3);
+foreach($random_letters as $random_cl) {
+	 $chosen_word_array[$random_cl]= strtoupper($chosen_word_array[$random_cl]);
+}
+$mixed_word = implode($chosen_word_array);
+echo $special_characters[array_rand($special_characters)]. "" .$special_characters[array_rand($special_characters)]. "" .$mixed_word. "" .rand(0,9). " (based on: " .$chosen_word. ") \n";
+?>
